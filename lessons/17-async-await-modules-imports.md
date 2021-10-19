@@ -50,15 +50,15 @@ async function getApiData() {
 
 
 **Module types:**
-- IIFE - Immediately invoked function expression
-- CommonJS Modules -- used by **Node.js**
-- ES6 Modules -- native in ES6 supported in modern browsers
-- AMD -- Asynchronous Module Definition. Used by **RequireJS**, slowly becoming obsolette
-- UMD -- Universal Module Definition, to make your code work in differnet environments
-- SystemJS Module -- used by SystemJS to transpile modules for old browsers
-- Webpack module -- Webpack works with all modules, packing them in a super-structure
-- Babel Module -- Babel also transpiles ES6 modules for old browsers 
-- Typescript Module -- Typecript uses and transpiles ES6 modules 
+- **IIFE**: Immediately invoked function expression
+- **CommonJS Modules**: used by **Node.js**
+- **ES6 Modules**: native in ES6 supported in modern browsers
+- **AMD**: Asynchronous Module Definition. Used by **RequireJS**, slowly becoming obsolette
+- **UMD**: Universal Module Definition, to make your code work in differnet environments
+- **SystemJS Module**: used by SystemJS to transpile modules for old browsers
+- **Webpack module**:  Webpack works with all modules, packing them in a super-structure
+- **Babel Module**: Babel also transpiles ES6 modules for old browsers 
+- **Typescript Module**: Typecript uses and transpiles ES6 modules 
 
 
 
