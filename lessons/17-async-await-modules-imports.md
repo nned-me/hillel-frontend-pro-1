@@ -180,4 +180,9 @@ export { default as DefaultExport } from 'bar.js';
 - **Modules are imported into the scope of a single script — they aren't available in the global scope**. Therefore, you will only be able to access imported features in the script they are imported into, and you won't be able to access them from the JavaScript console, for example. You'll still get syntax errors shown in the DevTools, but you'll not be able to use some of the debugging techniques you might have expected to use.
   
   
+**More reading**
+- https://weblogs.asp.net/dixin/understanding-all-javascript-module-formats-and-tools
+- same in Russian: https://habr.com/en/post/501198/
+- MDN: Javascript Modules https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+  
   
