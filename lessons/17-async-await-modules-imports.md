@@ -4,6 +4,41 @@
 - imports
 
 ## Async / await
+This is a syntax sugar around the **Promises**. 
+
+`async` - declares that function will return Promise, also you can use `await` inside function
+
+```
+async function someFunc() {
+  return 'YOLO';
+}
+// same as:
+async function someFunc() {
+  return Promise.resolve('YOLO');
+}
+```
+```
+someFunc().then(console.log); // YOLO
+```
+
+`await` - works only inside `async` functions. It waits for the Promise to be resolved or throws error on promise reject
+```
+async function asyncFunc() {
+  const value = await promise;
+}
+```
+
+```
+async function getApiData() {
+  try {
+    const resp = await fetch('https://api.github.com/users/nned-me');
+    console.log(resp.json());
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
 
 
 ## Modules in JS
