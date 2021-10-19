@@ -81,21 +81,30 @@ Internaly this look like:
 
 
 ## ES6 Modules
+
+**Exporting**
 ```
 let count = 0;
-// Named export:
+// Named export (zero or more per module):
 export const increase = () => ++count;
 export const reset = () => {
     count = 0;
     console.log("Count is reset.");
 };
-// Or default export:
+export const methods = {
+  increase,
+  reset
+}
+
+// Or default export (one per module):
 export default {
     increase,
-    reset
+    reset as myReset
 };
 ```
 
+
+**Importing**
 ```
 // Different ways of importing modules
 import defaultExport from "module-name";
@@ -109,4 +118,23 @@ import defaultExport, * as name from "module-name";
 import "module-name";
 const promise = import("module-name");
 ```
+
+**Re-exporting**
+```
+// someModule/index.js
+export { default as function1,
+         function2 } from 'bar.js';
+
+export { default as DefaultExport } from 'bar.js';
+```
+
+**Module scripts in HTML**
+```
+<script type="module" src="main.js"></script>
+// or
+<script type="module">
+  /* JavaScript module code here */
+</script>
+```
+
 
