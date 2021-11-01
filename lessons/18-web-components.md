@@ -61,9 +61,20 @@ Volia! We have our first web component up and running!
 ## Shadow DOM
 What is Shadow DOM? 
 - Basicallly it is an indendent DOM tree that can be attached to any element. 
-- It is not acccessible and visible via default methods
-- It can have own css rules
+- It is not acccessible and visible via default methods,  for example with `querySelector`
+- It can have own css rules and page css rules do not affect Shadow DOM
 
+![image](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM/shadowdom.svg)
+
+In browser it looks like:
+```
+#shadow-root
+  <style>...</style>
+  <slot name="icon"></slot>
+  <span id="wrapper">
+    <slot>Button</slot>
+  </span>
+```
 
 **Why use it?**
 - **Isolated DOM**: A component's DOM is self-contained (e.g. document.querySelector() won't return nodes in the component's shadow DOM).
@@ -76,10 +87,11 @@ What is Shadow DOM?
 Shadow DOM is supported by default in Firefox (63 and onwards), Chrome, Opera, and Safari. The new Chromium-based Edge (79 and onwards) supports it too; the old Edge didn't.
 
 **NOTE**
-Shadow DOM can be attached only to custom elements or one of this element tyeps: 
+Shadow DOM can be attached not to all elements. 
+- The browser already hosts its own internal shadow DOM for the element (<textarea>, <input>).
+- It doesn't make sense for the element to host a shadow DOM (<img>).
+So host can be **custom element** or one of this element types: 
 `"article", "aside", "blockquote", "body", "div", "footer", "h1", "h2", "h3", "h4", "h5", "h6", "header", "main", "nav", "p", "section", "span"`
-
-![image](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM/shadowdom.svg)
 
 Every element can hav 2 DOM subtrees:
 - Light DOM Tree
@@ -108,9 +120,73 @@ In open mode shadow of element is accesible by `element.shadowRoot` property. In
 const elemShadow = myCustomElem.shadowRoot;
 ```
 
+**Usage with Custom Elemens**
+```
+  class YoloBox extends HTMLElement {
+  constructor() {
+    super(); // always call super() first in the constructor.
+
+    // Attach a shadow root to 
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      <style>.yolo-box { color: red }</style> <!-- styles are scoped! -->
+      <div id="yolo-box">...</div>
+    `;
+  }
+
+  customElements.define('my-element', YoloBox);
+```
 
 
+### Shadow DOM Slots 
+Light DOM elements can appear in Shadow DOM via 'portals' called slots.
 
+**Named slots**
+
+```
+<yolo-card>
+  <img slot="avatar" src="/my-ava.png" />
+  <p slot="desc">
+    <b>Yolo</b>
+    My name is ...
+    My page is 
+  </p>
+</yolo-card>
+```
+  
+```
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      <div id="yolo-box">
+          <div class="avatar">
+             <slot name="avatar"></slot>
+          </div>
+          <!-- some more markup--->
+          <div class="desc">
+             <slot name="desc"></slot>
+          </div>
+      </div>
+    `;
+  }
+
+  customElements.define('my-element', YoloBox);
+```
+
+Slots in shadow DOM:
+```
+<!-- Default slot. If there's more than one default slot, the first is used. -->
+<slot></slot>
+
+<slot>fallback content</slot> <!-- default slot with fallback content -->
+
+<slot> <!-- default slot entire DOM tree as fallback -->
+  <h2>Title</h2>
+  <summary>Description text</summary>
+</slot>
+```
+
+
+  
 
 ## HTML templates
 
