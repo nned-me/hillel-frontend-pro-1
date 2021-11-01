@@ -4,20 +4,19 @@
 - web components basics
 - custom elements
 - shadow DOM
-- HTML templates
 
 
 ## Components based design paradigm
 
 
-## Web components basics
+### Web components basics
 We can create custom elements that incorporate in itself
 - HTML
 - CSS
 - JS
 
 
-## Custom elements
+### Custom elements
 
 **There are 2 types of custom elements:**
 - **Autonomous custom elements**  — standalone they don't inherit from standard HTML elements. They look liks this in code: `<user-name-link username="Alex" url="/user/123"/ img="alex.png">`
@@ -29,7 +28,7 @@ NOTE: At the moment Safari can not use custoimzed built in elements. You can che
 ![image](https://user-images.githubusercontent.com/22635061/139707703-6dfe9cfd-def9-4fa6-b210-33315cdfb6b3.png)
 
 
-## Let's try it!
+### Let's try it!
 Let's create rather dumb component `<yolo-btn name="Alex">` which renders button and shows alert YOLO on click .
 
 First, we need to declare ES6 class for this component:
@@ -51,13 +50,55 @@ window.customElements.define('yolo-btn', YoloButttonComponent);
 
 Volia! We have our first web component up and running!
 
-## What about styling?
+### Lifecycle hooks
+
+- **constructor**:	An instance of the element is created or upgraded. Useful for initializing state, setting up event listeners, or creating a shadow dom. 
+- **connectedCallback**:	Called every time the element is inserted into the DOM. Useful for running setup code, such as fetching resources or rendering. Generally, you should try to delay work until this time.
+- **disconnectedCallback**:	Called every time the element is removed from the DOM. Useful for running clean up code.
+- **attributeChangedCallback(attrName, oldVal, newVal)**:	Called when an observed attribute has been added, removed, updated, or replaced. Also called for initial values when an element is created by the parser, or upgraded. **Note**: only attributes listed in the **observedAttributes** property will receive this callback.
+- **adoptedCallback**:	The custom element has been moved into a new document (e.g. someone called document.adoptNode(el)).
+
+
+
+```
+class YoloWeather extends HTMLElement {
+  constructor() {
+    super();
+    
+    this.cityName = this.getAttibute('city');
+  }
+  
+  static get observedAttributes() {
+    return ['disabled', 'city'];
+  }
+  
+  connectedCallback() {
+    // fetch weather by cityName
+  }
+  
+  disconnectedCallback() {
+    // remove some stuff
+  }
+  
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    // check if city was changed
+  }
+  
+  adoptedCallback() {
+    // some iframe stuff?..
+  }
+}
+```
+
+
+
+### What about styling?
 
 1. Just add `style=""` to the elements inside the component.
 2. Use **Shadow Dom** and add internal `<style>` element to it.
 3. Use **Shadow Dom** and add external style via `<href type="style">` element to it.
 
-
+---
 ## Shadow DOM
 What is Shadow DOM? 
 - Basicallly it is an indendent DOM tree that can be attached to any element. 
@@ -155,40 +196,61 @@ Light DOM elements can appear in Shadow DOM via 'portals' called slots.
 ```
   
 ```
-    const shadowRoot = this.attachShadow({mode: 'open'});
-    shadowRoot.innerHTML = `
-      <div id="yolo-box">
-          <div class="avatar">
-             <slot name="avatar"></slot>
+  const shadowRoot = elem.attachShadow({mode: 'open'});
+  shadowRoot.innerHTML = `
+    <div id="yolo-box">
+        <div class="avatar">
+           <slot name="avatar"></slot>
+        </div>
+        <!-- some more markup--->
+        <div class="desc">
+           <slot name="desc"></slot>
+        </div>
+    </div>
+  `;
+```
+
+**Unnamed slots**
+In unnamed slot goes all light DOM in element that is not
+
+```
+<yolo-card>
+  <img slot="avatar" src="/my-ava.png" />
+  <p slot="desc">
+    <b>Yolo</b>
+    My name is ...
+    My page is 
+  </p>
+  <p>
+    some other info
+  </p>
+  <p>
+    some other info 2
+  </p>
+</yolo-card>
+```
+
+```
+  const shadowRoot = elem.attachShadow({mode: 'open'});
+  shadowRoot.innerHTML = `
+    <div id="yolo-box">
+        <div class="avatar">
+           <slot name="avatar"></slot>
+        </div>
+        <!-- some more markup--->
+        <div class="desc">
+            <h3>Desc</h3>
+           <slot name="desc"></slot>
+        </div>
+        <slot>
+          <div class="other-info">
+            <h3>Other info</h3>
           </div>
-          <!-- some more markup--->
-          <div class="desc">
-             <slot name="desc"></slot>
-          </div>
-      </div>
-    `;
-  }
-
-  customElements.define('my-element', YoloBox);
+        </slot>
+    </div>
+  `;
 ```
 
-Slots in shadow DOM:
-```
-<!-- Default slot. If there's more than one default slot, the first is used. -->
-<slot></slot>
-
-<slot>fallback content</slot> <!-- default slot with fallback content -->
-
-<slot> <!-- default slot entire DOM tree as fallback -->
-  <h2>Title</h2>
-  <summary>Description text</summary>
-</slot>
-```
-
-
-  
-
-## HTML templates
 
 
 
