@@ -1,6 +1,7 @@
-Lesson points
+**Lesson points**
 - html templates
-- 
+- SVG
+- Canvas basics
 
 
 ## Templates
@@ -222,9 +223,88 @@ arcTo(x1, y1, x2, y2, radius)
   ctx.fillStyle = 'rgba(255, 165, 0, 1)';
 
   ctx.globalAlpha = transparencyValue;
-  // Applies the specified transparency value to all future shapes drawn on the canvas. The value must be between 0.0 (fully transparent) to 1.0 (fully opaque). This value is  1.0 (fully opaque) by default.
+  // Applies the specified transparency value to all future shapes drawn on the canvas. 
+  // The value must be between 0.0 (fully transparent) to 1.0 (fully opaque). This value is  1.0 (fully opaque) by default.
 ```
+
+```
+```
+
+### Transformations
+  
+State:
+  
+- The transformations that have been applied (i.e. translate, rotate and scale – see below).
+- The current values of the following attributes: `strokeStyle, fillStyle, globalAlpha, 
+  lineWidth, lineCap, lineJoin, miterLimit, lineDashOffset, 
+  shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, 
+  globalCompositeOperation, font, textAlign, textBaseline, direction, 
+  imageSmoothingEnabled`.
+- The current clipping path
   
   
+- save() Saves the entire state of the canvas.
+- restore() Restores the most recently saved canvas state.
+
   
+#### Translate
+```
+  translate(x, y)
+```
+![translate](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations/canvas_grid_translate.png)
+
+  
+#### Rotate
+```
+rotate(angle)
+// Rotates the canvas clockwise around the current origin by the angle number of radians.
+```
+![rotate](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations/canvas_grid_rotate.png)
+  
+  
+#### Scaling
+```
+  scale(x, y)
+```
+Scales the canvas units by x horizontally and by y vertically. Both parameters are real numbers. Values that are smaller than 1.0 reduce the unit size and values above 1.0 increase the unit size. Values of 1.0 leave the units the same size.
+
+
+#### Transforming
+
+```
+  transform(a, b, c, d, e, f)
+  // Multiplies the current transformation matrix with the matrix described by its arguments. 
+
+  setTransform(a, b, c, d, e, f)
+  // Resets the current transform to the identity matrix, and then invokes the transform() method with the same arguments. 
+  // This basically undoes the current transformation, then sets the specified transform, all in one step.
+
+  resetTransform()
+  // Resets the current transform to the identity matrix. This is the same as calling: ctx.setTransform(1, 0, 0, 1, 0, 0);  
+```
+
+The parameters:
+
+- a (m11)
+Horizontal scaling.
+
+- b (m12)
+Horizontal skewing.
+
+- c (m21)
+Vertical skewing.
+
+- d (m22)
+Vertical scaling.
+
+- e (dx)
+Horizontal moving.
+
+- f (dy)
+Vertical moving.
+
+
+### Images
+  
+  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
   
