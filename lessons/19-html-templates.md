@@ -305,6 +305,17 @@ Vertical moving.
 
 
 ### Images
+```  
+  drawImage(image, x, y, width, height)
+  // Draws the CanvasImageSource specified by the image parameter at the coordinates (x, y).
+  
+  drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+  // Given an image, this function takes the area of the source image specified by the rectangle whose top-left corner is (sx, sy) 
+  // and whose width and height are sWidth and sHeight and draws it into the canvas, placing it on the canvas at (dx, dy) 
+  // and scaling it to the size specified by dWidth and dHeight.
+  
+  
+```
   
   https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
   
