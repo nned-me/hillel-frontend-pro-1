@@ -168,6 +168,7 @@ Calling start() is only needed if the message event is wired up via the addEvent
 
 
 
+
 ## Service Workers
 
 - Service worker is a programmable network proxy, allowing you to control how network requests from your page are handled.
